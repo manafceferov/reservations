@@ -25,6 +25,11 @@ public class MenuItemController {
         return new ApiResponse<>(true, menuItemService.create(dto), Messages.CREATED.name());
     }
 
+    @PostMapping("/batch")
+    public ApiResponse<List<MenuItemResponseDto>> createBatch(@RequestBody List<MenuItemCreateDto> dtos) {
+        return new ApiResponse<>(true, menuItemService.createBatch(dtos), Messages.CREATED.name());
+    }
+
     @GetMapping
     public ApiResponse<Page<MenuItemResponseDto>> getAll(
             @RequestParam(defaultValue = "0") int page,

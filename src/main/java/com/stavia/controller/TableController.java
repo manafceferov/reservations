@@ -24,6 +24,11 @@ public class TableController {
         return new ApiResponse<>(true, tableService.create(dto), Messages.CREATED.name());
     }
 
+    @PostMapping("/batch")
+    public ApiResponse<List<TableResponseDto>> createBatch(@RequestBody List<TableCreateDto> dtos) {
+        return new ApiResponse<>(true, tableService.createBatch(dtos), Messages.CREATED.name());
+    }
+
     @GetMapping
     public ApiResponse<List<TableResponseDto>> getAll() {
         return new ApiResponse<>(true, tableService.getAll(), Messages.SUCCESS.name());

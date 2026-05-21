@@ -53,6 +53,21 @@ public class RoomService {
         return roomMapper.toResponseDto(roomRepository.save(room));
     }
 
+    @Transactional
+    public List<RoomResponseDto> createBatch(List<RoomCreateDto> dtos) {
+        List<Room> rooms = dtos.stream().map(dto -> {
+            Room room = new Room();
+            room.setRoomNumber(dto.getRoomNumber());
+            room.setRoomType(RoomType.valueOf(dto.getRoomType()));
+            room.setPricePerNight(dto.getPricePerNight());
+            room.setCapacity(dto.getCapacity());
+            room.setDescription(dto.getDescription());
+            return room;
+        }).toList();
+        return roomRepository.saveAll(rooms)
+                .stream().map(roomMapper::toResponseDto).toList();
+    }
+
     public Page<RoomResponseDto> getAll(Pageable pageable) {
         return roomRepository.findAllByDeletedFalse(pageable)
                 .map(roomMapper::toResponseDto);

@@ -29,7 +29,7 @@ public class TableService {
 
     private final RestaurantTableRepository tableRepository;
     private final TableReservationRepository reservationRepository;
-    private final MenuItemRepository menuItemRepository; // Yeməkləri tapmaq üçün əlavə edildi
+    private final MenuItemRepository menuItemRepository;
     private final UserService userService;
     private final TableMapper tableMapper;
 
@@ -53,6 +53,20 @@ public class TableService {
         table.setCapacity(dto.getCapacity());
         table.setLocation(dto.getLocation());
         return tableMapper.toResponseDto(tableRepository.save(table));
+    }
+
+    @Transactional
+    public List<TableResponseDto> createBatch(List<TableCreateDto> dtos) {
+        List<RestaurantTable> tables = dtos.stream().map(dto -> {
+            RestaurantTable table = new RestaurantTable();
+            table.setTableNumber(dto.getTableNumber());
+            table.setCapacity(dto.getCapacity());
+            table.setLocation(dto.getLocation());
+            return table;
+        }).toList();
+
+        return tableRepository.saveAll(tables)
+                .stream().map(tableMapper::toResponseDto).toList();
     }
 
     public List<TableResponseDto> getAll() {
@@ -89,14 +103,12 @@ public class TableService {
         reservation.setNotes(dto.getNotes());
         reservation.setStatus(ReservationStatus.CONFIRMED);
 
-        // ─── ÖN SİFARİŞ YEMƏKLƏRİNİ BAZAYA YAZIRIQ ───
         if (dto.getMenuItemIds() != null && !dto.getMenuItemIds().isEmpty()) {
             List<MenuItem> items = dto.getMenuItemIds().stream()
                     .map(id -> menuItemRepository.findById(id).orElse(null))
                     .filter(Objects::nonNull)
                     .toList();
-
-            reservation.setMenuItems(items); // Artıq entity-də bu metod işləyəcək!
+            reservation.setMenuItems(items);
         }
 
         return tableMapper.toReservationResponseDto(reservationRepository.save(reservation));

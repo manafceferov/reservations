@@ -24,6 +24,11 @@ public class RoomController {
         return new ApiResponse<>(true, roomService.create(dto), Messages.CREATED.name());
     }
 
+    @PostMapping("/batch")
+    public ApiResponse<List<RoomResponseDto>> createBatch(@RequestBody List<RoomCreateDto> dtos) {
+        return new ApiResponse<>(true, roomService.createBatch(dtos), Messages.CREATED.name());
+    }
+
     @GetMapping
     public ApiResponse<Page<RoomResponseDto>> getAll(
             @RequestParam(defaultValue = "0") int page,

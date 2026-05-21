@@ -35,6 +35,21 @@ public class MenuItemService {
         return menuItemMapper.toResponseDto(menuItemRepository.save(item));
     }
 
+    @Transactional
+    public List<MenuItemResponseDto> createBatch(List<MenuItemCreateDto> dtos) {
+        List<MenuItem> items = dtos.stream().map(dto -> {
+            MenuItem item = new MenuItem();
+            item.setName(dto.getName());
+            item.setDescription(dto.getDescription());
+            item.setPrice(dto.getPrice());
+            item.setCategory(dto.getCategory());
+            return item;
+        }).toList();
+
+        return menuItemRepository.saveAll(items)
+                .stream().map(menuItemMapper::toResponseDto).toList();
+    }
+
     public Page<MenuItemResponseDto> getAll(Pageable pageable) {
         return menuItemRepository.findAllByDeletedFalse(pageable)
                 .map(menuItemMapper::toResponseDto);

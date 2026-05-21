@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: "06-add-reservation-menu-items-join-table"
+      author: stavia
+      changes:
+        - createTable:
+            tableName: reservation_menu_items
+            columns:
+              - column:
+                  name: reservation_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_res_menu_items_reservation
+                    referencedTableName: table_reservations
+                    referencedColumnNames: id
+              - column:
+                  name: menu_item_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_res_menu_items_menu_item
+                    referencedTableName: menu_items
+                    referencedColumnNames: id
+        - addPrimaryKey:
+            tableName: reservation_menu_items
+            columnNames: reservation_id, menu_item_id
+            constraintName: pk_reservation_menu_items

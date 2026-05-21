@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Otaq rezervasiyalarım')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container">
+    <h4 class="section-title mb-4">🛏️ Otaq Rezervasiyalarım</h4>
+
+    <div th:if="${#lists.isEmpty(reservations)}" class="text-center text-muted py-5">
+        <i class="bi bi-calendar-x fs-1"></i>
+        <p class="mt-3">Hələ rezervasiyanız yoxdur.</p>
+        <a href="/web/rooms" class="btn btn-primary">Otaqlara bax</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6" th:each="r : ${reservations}">
+            <div class="card p-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <h6 class="fw-bold" th:text="'Otaq ' + ${r.roomNumber}"></h6>
+                    <span class="badge"
+                          th:classappend="${r.status == 'CONFIRMED'} ? 'bg-success' : (${r.status == 'CANCELLED'} ? 'bg-danger' : 'bg-warning text-dark')"
+                          th:text="${r.status}"></span>
+                </div>
+                <p class="text-muted small mb-1"><i class="bi bi-calendar-check"></i> Giriş: <span th:text="${r.checkIn}"></span></p>
+                <p class="text-muted small mb-1"><i class="bi bi-calendar-x"></i> Çıxış: <span th:text="${r.checkOut}"></span></p>
+                <p class="text-muted small mb-1"><i class="bi bi-people"></i> Qonaq: <span th:text="${r.guestCount}"></span></p>
+                <p class="fw-bold text-warning mt-2" th:text="'Cəmi: ₼' + ${r.totalPrice}"></p>
+                <form th:if="${r.status == 'CONFIRMED'}"
+                      th:action="@{/web/rooms/reservations/{id}/cancel(id=${r.id})}" method="post" class="mt-2">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Ləğv et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

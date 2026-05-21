@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Profil Məlumatları')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card p-4 mb-5">
+                <h4 class="fw-bold mb-4 text-center section-title">Profil Məlumatları</h4>
+
+                <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}" id="successMessage"></div>
+                <div th:if="${error != null}" class="alert alert-danger text-center" th:text="${error}" id="errorMessage"></div>
+
+                <form class="needs-validation" th:action="@{/web/profile/update}" th:object="${userEditDto}" method="post" novalidate>
+
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Ad</label>
+                        <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required/>
+                        <div class="invalid-feedback">Ad sahəsi boş buraxıla bilməz.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Soyad</label>
+                        <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required/>
+                        <div class="invalid-feedback">Soyad sahəsi boş buraxıla bilməz.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control bg-light" id="email" th:value="${email}" readonly/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Telefon nömrəsi</label>
+                        <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"/>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Yadda saxla</button>
+                        <a th:href="@{/}" class="btn btn-secondary">Geri</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+
+<script>
+    // Bootstrap validation scripti
+    (function () {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+
+    // Mesajların 3 saniyə sonra təmizlənməsi
+    setTimeout(function () {
+        const success = document.getElementById('successMessage');
+        const error = document.getElementById('errorMessage');
+        [success, error].forEach(el => {
+            if (el) {
+                el.style.transition = 'opacity 0.5s';
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 500);
+            }
+        });
+    }, 3000);
+</script>
+</body>
+</html>

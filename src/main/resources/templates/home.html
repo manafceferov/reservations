@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Ana səhifə')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container">
+    <!-- Hero -->
+    <div class="text-center py-5 mb-4" style="background: linear-gradient(135deg, #1b2a41, #2e4a6e); border-radius: 16px; color: white;">
+        <h1 class="fw-bold mb-3">🏨 Stavia Hotel & Restaurant</h1>
+        <p class="fs-5 mb-4">Lüks otaq rezervasiyası və restoran xidməti</p>
+        <a href="/web/rooms" class="btn btn-primary btn-lg me-2">Otaq rezerv et</a>
+        <a href="/web/tables" class="btn btn-outline-light btn-lg">Masa ayır</a>
+    </div>
+
+    <!-- Features -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card p-4 text-center h-100">
+                <i class="bi bi-door-open fs-1 text-warning mb-3"></i>
+                <h5 class="fw-bold">Otaq Rezervasiyası</h5>
+                <p class="text-muted">Standart, Deluxe və Suite otaqlardan seçin. Onlayn rezerv edin.</p>
+                <a href="/web/rooms" class="btn btn-primary mt-auto">Otaqlara bax</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 text-center h-100">
+                <i class="bi bi-cup-hot fs-1 text-warning mb-3"></i>
+                <h5 class="fw-bold">Restoran</h5>
+                <p class="text-muted">Masa ayırın, menyumuza baxın, ləzzətli yeməkləri sifariş edin.</p>
+                <a href="/web/tables" class="btn btn-primary mt-auto">Masa ayır</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 text-center h-100">
+                <i class="bi bi-list-ul fs-1 text-warning mb-3"></i>
+                <h5 class="fw-bold">Menyu</h5>
+                <p class="text-muted">Müxtəlif kateqoriyalarda zəngin menyu çeşidimizə göz atın.</p>
+                <a href="/web/menu" class="btn btn-primary mt-auto">Menyuya bax</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

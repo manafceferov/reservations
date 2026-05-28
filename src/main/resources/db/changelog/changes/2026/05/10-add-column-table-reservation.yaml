@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: "06-add-reservation-menu-items-join-table"
+      id: "10"
       author: stavia
       changes:
         - createTable:

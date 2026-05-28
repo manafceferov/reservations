@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Hotellər')}"></head>
+<body class="d-flex flex-column min-vh-100">
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container flex-grow-1 py-2">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="section-title mb-1">🏨 Hotellər</h3>
+            <p class="text-muted mb-0">
+                Mövcud hotellərimizdən birini seçin
+            </p>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(hotels)}"
+         class="text-center py-5 text-muted">
+
+        <i class="bi bi-building fs-1"></i>
+
+        <p class="mt-3">
+            Heç bir hotel tapılmadı.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-4 col-md-6"
+             th:each="hotel : ${hotels}">
+
+            <div class="card h-100 p-4">
+
+                <div class="d-flex justify-content-between align-items-start mb-3">
+
+                    <div>
+                        <h5 class="fw-bold mb-1"
+                            th:text="${hotel.name}">
+                            Hotel Name
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-geo-alt"></i>
+
+                            <span th:text="${hotel.address}">
+                                Address
+                            </span>
+                        </p>
+                    </div>
+
+                    <span class="badge badge-gold px-3 py-2">
+                        Hotel
+                    </span>
+                </div>
+
+                <p class="text-muted"
+                   th:text="${hotel.description}">
+                    Description
+                </p>
+
+                <div class="mt-auto">
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span>
+                            <i class="bi bi-telephone"></i>
+
+                            <span th:text="${hotel.phoneNumber}">
+                                Phone
+                            </span>
+                        </span>
+
+                    </div>
+
+                    <a th:href="@{/web/hotels/{id}/rooms(id=${hotel.id})}"
+                       class="btn btn-primary w-100">
+
+                        Otaqlara bax
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

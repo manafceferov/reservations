@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: "09"
+      author: stavia
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: email_verified
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verification_token
+                  type: VARCHAR(255)

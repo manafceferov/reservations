@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<footer th:fragment="footer" class="mt-5 py-4 text-center">
+<footer th:fragment="footer" class="mt-auto py-4 text-center">
     <div class="container">
         <p class="mb-0">© 2026 <strong>Stavia</strong></p>
     </div>
@@ -15,12 +15,11 @@
             const toggleBtn = document.getElementById("themeToggle");
             const themeIcon = document.getElementById("theme-icon");
             const savedTheme = localStorage.getItem("theme") || "light";
+            body.classList.remove("light-mode", "dark-mode");
             body.classList.add(savedTheme + "-mode");
-
             if (themeIcon) {
                 themeIcon.className = savedTheme === "light" ? "bi bi-moon-fill" : "bi bi-sun-fill";
             }
-
             if (toggleBtn) {
                 toggleBtn.onclick = function () {
                     if (body.classList.contains("light-mode")) {

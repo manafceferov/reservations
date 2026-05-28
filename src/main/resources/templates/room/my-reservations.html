@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: head('Otaq rezervasiyalarım')}"></head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <nav th:replace="~{fragments/header :: navbar}"></nav>
 
-<div class="container">
+<div class="container flex-grow-1 py-2">
     <h4 class="section-title mb-4">🛏️ Otaq Rezervasiyalarım</h4>
 
     <div th:if="${#lists.isEmpty(reservations)}" class="text-center text-muted py-5">
